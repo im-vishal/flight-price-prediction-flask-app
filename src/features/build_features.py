@@ -9,10 +9,11 @@ from src import logger
 import sklearn
 import pandas as pd
 import numpy as np
+import joblib
 
 sklearn.set_config(transform_output="pandas")
 
-def build_features(X_path: Path, y_path: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
+def build_features(X_path: Path, y_path: Path) -> tuple[pd.DataFrame, pd.DataFrame, ColumnTransformer]:
     logger.info("Loading Datasets....")
     X = pd.read_csv(X_path)
     y = pd.read_csv(y_path)
@@ -55,7 +56,9 @@ def build_features(X_path: Path, y_path: Path) -> tuple[pd.DataFrame, pd.DataFra
     logger.info("Transforming Datasets....")
     X_processed = preprocessor.fit_transform(X)
 
-    return X_processed, y
+    
+
+    return X_processed, y,  preprocessor
 
 
 def main() -> None:
@@ -68,9 +71,13 @@ def main() -> None:
 
     Path(processed_dir).mkdir(parents=True, exist_ok=True)
 
-    X_processed, y_processed = build_features(X_path, y_path)
+    logger.info("Saving preprocessor and transformed data....")
+
+    X_processed, y_processed, preprocessor = build_features(X_path, y_path)
     X_processed.to_csv(Path(processed_dir) / "X_processed.csv")
     y_processed.to_csv(Path(processed_dir) / "y_processed.csv")
+
+    joblib.dump(preprocessor, processed_dir / "preprocessor.joblib")
 
 
 
