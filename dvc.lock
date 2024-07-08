@@ -72,3 +72,21 @@ stages:
       md5: f7ffe5cc0c2c3f0810af65d83423d1b4.dir
       size: 596032
       nfiles: 1
+  evaluate_model:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: 99285aefd4e7eda2a6565a76376211c8.dir
+      size: 83369
+      nfiles: 5
+    - path: src/models/evaluate_model.py
+      hash: md5
+      md5: c8bb41a3ce4826d6954f85365b66cc13
+      size: 1170
+    outs:
+    - path: reports
+      hash: md5
+      md5: 8d64e8e4bcab7a44525b3a1b6df71eb4.dir
+      size: 32
+      nfiles: 1

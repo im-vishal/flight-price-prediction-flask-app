@@ -26,3 +26,10 @@ stages:
     - src/models/train_model.py
     outs:
     - models
+  evaluate_model:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - data/interim
+    - src/models/evaluate_model.py
+    metrics:
+    - reports
