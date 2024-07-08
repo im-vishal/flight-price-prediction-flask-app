@@ -11,3 +11,10 @@ stages:
     - data/interim/X_train.csv
     - data/interim/y_test.csv
     - data/interim/y_train.csv
+  build_features:
+    cmd: python src/features/build_features.py
+    deps:
+    - data/interim
+    - src/features/build_features.py
+    outs:
+    - data/processed
