@@ -74,8 +74,8 @@ def main() -> None:
     logger.info("Saving preprocessor and transformed data....")
 
     X_processed, y_processed, preprocessor = build_features(X_path, y_path)
-    X_processed.to_csv(Path(processed_dir) / "X_processed.csv")
-    y_processed.to_csv(Path(processed_dir) / "y_processed.csv")
+    X_processed.to_csv(Path(processed_dir) / "X_processed.csv", index=False)
+    y_processed.to_csv(Path(processed_dir) / "y_processed.csv", index=False)
 
     joblib.dump(preprocessor, processed_dir / "preprocessor.joblib")
 
