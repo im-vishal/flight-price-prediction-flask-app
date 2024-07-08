@@ -1,0 +1,5 @@
+outs:
+- md5: 9cb5bfbef61d5d6ce24d07a54b0ec5f7
+  size: 1096472
+  hash: md5
+  path: flight_price.csv
