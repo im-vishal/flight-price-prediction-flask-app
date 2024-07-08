@@ -19,7 +19,7 @@ def train_model(interim_dir: Path, processed_dir: Path, model_dir: Path) -> Pipe
     logger.info("Training Model....")
     model = Pipeline(steps=[
         ("pre", preprocessor),
-        ("rf", RandomForestRegressor(n_estimators=10))
+        ("rf", RandomForestRegressor(n_estimators=50))
     ])
 
     with mlflow.start_run():
