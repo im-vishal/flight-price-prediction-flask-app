@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  make_dataset:
+    cmd: python src/data/make_dataset.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: ef9fc4b35329c30daa54a65468b2016f
+      size: 16314
+    - path: data/raw/train.csv
+      hash: md5
+      md5: aa32527c2aa6237339f018b1daba7d17
+      size: 52196
+    - path: data/raw/val.csv
+      hash: md5
+      md5: ba55a3f84af9ddb85216d718cac8c7e5
+      size: 12909
+    - path: src/data/make_dataset.py
+      hash: md5
+      md5: d42032becb0745625873ff3aff099e3c
+      size: 1279
+    outs:
+    - path: data/interim/X_test.csv
+      hash: md5
+      md5: 82cc1ffb6757b5de89a1fcad534f2bb9
+      size: 15446
+    - path: data/interim/X_train.csv
+      hash: md5
+      md5: 8ffd3458fa947994899a33225fa5ebe4
+      size: 61462
+    - path: data/interim/y_test.csv
+      hash: md5
+      md5: d54b0aa677e97951730c45dbea963060
+      size: 1270
+    - path: data/interim/y_train.csv
+      hash: md5
+      md5: 71b77920e55f6e6561a489b52d93af88
+      size: 5137

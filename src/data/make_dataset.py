@@ -1,30 +1,40 @@
-# -*- coding: utf-8 -*-
-import click
-import logging
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
+from src import logger
+
+import pandas as pd
+
+def split_data(data_dir: Path) ->  tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
+    logger.info("Loading Data....")
+    train_df = pd.read_csv(Path(data_dir) / "train.csv")
+    val_df = pd.read_csv(Path(data_dir) / "val.csv")
+    test_df = pd.read_csv(Path(data_dir) / "test.csv")
+    data = pd.concat([train_df, val_df], axis=0)
+
+    X = data.drop(columns="price")
+    y = data["price"].copy()
+    X_test = test_df.drop(columns="price")
+    y_test = test_df["price"].copy()
+
+    return X, y, X_test, y_test
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
-    """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../processed).
-    """
-    logger = logging.getLogger(__name__)
-    logger.info('making final data set from raw data')
+def main() -> None:
+    """main function to call other functions"""
+    home_dir = Path(__file__).parent.parent.parent
+    raw_dir = home_dir / "data/raw"
+    interim_dir = home_dir / "data/interim"
 
+    # print(f"{raw_dir = }")
+    logger.info("Saving interim dataset")
+    X, y, X_test, y_test = split_data(raw_dir)
 
-if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
+    Path(interim_dir).mkdir(parents=True, exist_ok=True)
+    X.to_csv(interim_dir / "X_train.csv", index=False)
+    y.to_csv(interim_dir / "y_train.csv", index=False)
+    X_test.to_csv(interim_dir / "X_test.csv", index=False)
+    y_test.to_csv(interim_dir / "y_test.csv", index=False)
 
-    # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
-
-    # find .env automagically by walking up directories until it's found, then
-    # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
-
+if __name__ == "__main__":
     main()
+
+    

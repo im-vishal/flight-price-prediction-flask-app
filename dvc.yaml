@@ -1,0 +1,13 @@
+stages:
+  make_dataset:
+    cmd: python src/data/make_dataset.py
+    deps:
+    - data/raw/test.csv
+    - data/raw/train.csv
+    - data/raw/val.csv
+    - src/data/make_dataset.py
+    outs:
+    - data/interim/X_test.csv
+    - data/interim/X_train.csv
+    - data/interim/y_test.csv
+    - data/interim/y_train.csv
